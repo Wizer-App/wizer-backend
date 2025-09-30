@@ -11,37 +11,67 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Team> Teams { get; set; } = null!;
     public DbSet<Activity> Activities { get; set; } = null!;
-    
-    
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         // Relación uno a muchos: SchoolClass → Teacher
         modelBuilder.Entity<SchoolClass>()
-            .HasOne(s => s.Teacher)       // Una clase tiene un Teacher
-            .WithMany()                   // Un teacher puede tener muchas clases
+            .HasOne(s => s.Teacher) // Una clase tiene un Teacher
+            .WithMany() // Un teacher puede tener muchas clases
             .HasForeignKey(s => s.TeacherId)
             .OnDelete(DeleteBehavior.Restrict); // Evita que borrar un teacher borre clases
 
         // Relación muchos a muchos: SchoolClass ↔ Students
         modelBuilder.Entity<SchoolClass>()
             .HasMany(s => s.Students)
-            .WithMany(u => u.SchoolClasses); 
+            .WithMany(u => u.SchoolClasses);
 
         // Relación uno a muchos: SchoolClass → Teams
         modelBuilder.Entity<SchoolClass>()
             .HasMany(s => s.Teams)
-            .WithOne(t => t.SchoolClass) 
+            .WithOne(t => t.SchoolClass)
             .HasForeignKey(t => t.SchoolClassId)
             .OnDelete(DeleteBehavior.Cascade);
 
         // Relación uno a muchos: SchoolClass → Activities
         modelBuilder.Entity<SchoolClass>()
             .HasMany(s => s.Activities)
-            .WithOne(a => a.SchoolClass)  
+            .WithOne(a => a.SchoolClass)
             .HasForeignKey(a => a.SchoolClassId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Team>()
+            .HasOne(t => t.Creator)
+            .WithMany()
+            .HasForeignKey(t => t.CreatorId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Team>()
+            .HasMany(t => t.Members)
+            .WithMany(u => u.Teams);
+        
+        modelBuilder.Entity<Team>()
+            .HasMany(t => t.Activities)
+            .WithOne(a => a.Team)
+            .HasForeignKey(a=> a.TeamId )
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Document>()
+            .HasOne(d => d.Creator)
+            .WithMany()
+            .HasForeignKey(d => d.CreatorId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Document>()
+            .HasOne(d=> d.Activity)
+            .WithMany()
+            .HasForeignKey(d=>d.ActivityId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+
     }
 
 }
