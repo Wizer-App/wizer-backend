@@ -58,7 +58,19 @@ public class AppDbContext : DbContext
             .WithOne(a => a.Team)
             .HasForeignKey(a=> a.TeamId )
             .OnDelete(DeleteBehavior.Cascade);
-            
+        
+        modelBuilder.Entity<Document>()
+            .HasOne(d => d.Creator)
+            .WithMany()
+            .HasForeignKey(d => d.CreatorId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Document>()
+            .HasOne(d=> d.Activity)
+            .WithMany()
+            .HasForeignKey(d=>d.ActivityId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
 
     }
 
