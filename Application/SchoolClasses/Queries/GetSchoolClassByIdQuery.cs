@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Application.SchoolClasses.Queries;
 
-public class GetByIdQuery : IRequest<SchoolClass>
+public class GetSchoolClassByIdQuery : IRequest<SchoolClass>
 {  
     public int Id { get;}
     
-    public GetByIdQuery(int id)
+    public GetSchoolClassByIdQuery(int id)
     {
         Id = id;
     }
