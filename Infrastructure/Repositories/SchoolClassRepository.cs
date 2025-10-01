@@ -26,7 +26,7 @@ public class SchoolClassRepository : ISchoolClassRepository
             .Include(sc => sc.Teams)
             .Include(sc => sc.Activities)
                 // es como SQL busca el los estudiantes si exyeste almenos uno(any) que su id sea el que pasamos
-            .Where(sc => sc.Students.Any(s => s.Id == userId))
+            .Where(sc => sc.TeacherId == userId)
                 //lo devuelve como lista 
             .ToListAsync();
     }
