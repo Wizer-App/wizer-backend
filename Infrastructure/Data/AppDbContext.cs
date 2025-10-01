@@ -11,6 +11,8 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Team> Teams { get; set; } = null!;
     public DbSet<Activity> Activities { get; set; } = null!;
+    public DbSet<Document> Documents { get; set; } = null!;
+    public DbSet<InfoUser> InfoUsers { get; set; } = null!;
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,30 +50,48 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(t => t.CreatorId)
             .OnDelete(DeleteBehavior.Restrict);
-        
+
         modelBuilder.Entity<Team>()
             .HasMany(t => t.Members)
             .WithMany(u => u.Teams);
-        
+
         modelBuilder.Entity<Team>()
             .HasMany(t => t.Activities)
             .WithOne(a => a.Team)
-            .HasForeignKey(a=> a.TeamId )
+            .HasForeignKey(a => a.TeamId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         modelBuilder.Entity<Document>()
             .HasOne(d => d.Creator)
             .WithMany()
             .HasForeignKey(d => d.CreatorId)
             .OnDelete(DeleteBehavior.Restrict);
-        
-        modelBuilder.Entity<Document>()
-            .HasOne(d=> d.Activity)
-            .WithMany()
-            .HasForeignKey(d=>d.ActivityId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
 
+        modelBuilder.Entity<Document>()
+            .HasOne(d => d.Activity)
+            .WithMany()
+            .HasForeignKey(d => d.ActivityId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Relación uno a muchos: User → Activities (CreateBy)
+        modelBuilder.Entity<Activity>()
+            .HasOne(a => a.CreatedBy)
+            .WithMany(u => u.Activities)
+            .HasForeignKey(a => a.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Relación uno a muchos: Activity → Documents
+        modelBuilder.Entity<Activity>()
+            .HasMany(a => a.Documents)
+            .WithOne(d => d.Activity)
+            .HasForeignKey(d => d.ActivityId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Activities)
+            .WithOne(a => a.CreatedBy)
+            .HasForeignKey(a => a.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 
 }
