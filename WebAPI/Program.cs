@@ -1,4 +1,5 @@
 using Application.Interfaces;
+using Application.SchoolClasses.Handlers;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using MediatR;
@@ -13,7 +14,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 //los repositories
 builder.Services.AddScoped<ISchoolClassRepository, SchoolClassRepository>();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly)); // Escanea Handlers en Application
+
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly)); // Escanea Handlers en Application
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(GetAllSchoolClassByUserIdHandler).Assembly));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
