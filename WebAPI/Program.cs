@@ -16,7 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 //los repositories
 builder.Services.AddScoped<ISchoolClassRepository, SchoolClassRepository>();
-builder.Services.AddScoped<IUserRepository, IUserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly)); // Escanea Handlers en Application
 // En Program.cs
