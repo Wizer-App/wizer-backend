@@ -1,5 +1,6 @@
 using Application.Interfaces;
 using Application.SchoolClasses.Handlers;
+using Application.SchoolClasses.Mapping;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using MediatR;
@@ -19,6 +20,7 @@ builder.Services.AddScoped<ISchoolClassRepository, SchoolClassRepository>();
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllSchoolClassByUserIdHandler).Assembly));
 
+builder.Services.AddAutoMapper(typeof(SchoolClassProfile)); 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

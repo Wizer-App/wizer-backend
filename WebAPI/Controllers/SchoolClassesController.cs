@@ -1,3 +1,4 @@
+using Application.DTOs;
 using Application.SchoolClasses.Commands;
 using Application.SchoolClasses.Queries;
 using Domain.Entities;
@@ -22,20 +23,21 @@ public class SchoolClassesController : ControllerBase
     public async Task<IActionResult> GetAllSchoolClassByUserId(int userId)
     {
         var result = await _mediator.Send(new GetAllSchoolClassByUserIdQuery(userId));
+        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(result));
         return Ok(result);
     }
 
     [HttpGet("schoolclass/class/{schoolClassId:int}")]
     public async Task<IActionResult> GetById(int schoolClassId)
     {
-        var result = await _mediator.Send((new GetByIdQuery(schoolClassId)));
+        var result = await _mediator.Send((new GetSchoolClassByIdQuery(schoolClassId)));
         return Ok(result);
     }
 
     [HttpPost("schoolclass")]
-    public async Task<IActionResult> Add([FromBody] SchoolClass schoolClass)
+    public async Task<IActionResult> Add([FromBody] SchoolClassDto schoolClassDto)
     {
-        var result = await _mediator.Send(new AddCommand(schoolClass));
+        var result = await _mediator.Send(new AddSchoolClassCommand(schoolClassDto));
         return Ok(result);
     }
 
