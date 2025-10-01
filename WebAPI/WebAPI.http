@@ -4,3 +4,25 @@ GET {{WebAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+### Obtener todas las clases de un usuario
+GET http://localhost:5285/api/SchoolClasses/schoolclass/user/2
+Accept: application/json
+
+###
+
+### Obtener clase por ID
+GET http://localhost:5285/api/SchoolClasses/schoolclass/class/1
+Accept: application/json
+
+
+### Crear una clase
+POST http://localhost:5285/api/SchoolClasses/schoolclass
+Content-Type: application/json
+
+{
+  "name": "test 101",
+  "description": "Clase introductoria de matemáticas",
+  "teacher": {
+    "id": 2
+  }
+}
