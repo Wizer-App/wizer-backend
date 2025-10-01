@@ -99,7 +99,7 @@ public class SchoolClassRepository : ISchoolClassRepository
         }
         
         //busca si el usuario ya esta en la clase 
-        if (!schoolClass.Students.Any(u => u.Id == userId))
+        if (schoolClass!.Students.Any(u => u.Id == userId))
         {
             // de no ser asi lo marca como agregado
             schoolClass.Students.Add(user);
