@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.SchoolClasses.Handlers;
 
-//lo mimo que lo de query y command pero se pasa antes la query o command
+//lo mismo que lo de query y command pero se pasa antes la query o command
 public class GetAllSchoolClassByUserIdHandler : IRequestHandler<GetAllSchoolClassByUserIdQuery, IEnumerable<SchoolClass>>
 {
     //en estos inyectamos el repository donde definimos los metodos
