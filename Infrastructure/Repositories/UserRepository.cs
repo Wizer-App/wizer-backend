@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-/*public class UserRepository : IUserRepository
+public class UserRepository : IUserRepository
 {
     private readonly AppDbContext _context;
 
@@ -16,6 +16,75 @@ namespace Infrastructure.Repositories;
 
     public async Task<User?> GetByIdAsync(int id)
     {
-        
+        return await _context.Users
+            .Include(u => u.Username)
+            .Include(u => u.Name)
+            .Include(u => u.LastName)
+            .FirstOrDefaultAsync(u => u.Id == id);
     }
-}*/
+
+    public async Task<User?> GetByUsernameAsync(string username)
+    {
+        return await _context.Users
+            .Include(u => u.Id)
+            .Include(u => u.Name)
+            .Include(u => u.LastName)
+            .FirstOrDefaultAsync(u => u.Username == username);
+    }
+
+    public async Task<User> AddAsync(User user)
+    {
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+        return user;
+    }
+
+    public async Task<User> UpdateAsync(User user)
+    {
+        _context.Entry(user).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+        return user;
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user != null)
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    {
+        return await _context.Users
+            .Include(u => u.Id)
+            .Include(u => u.Username)
+            .Include(u => u.Name)
+            .Include(u => u.LastName)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<User>> GetAllTeachersAsync()
+    {
+        return await _context.Users
+            .Include(u => u.Id)
+            .Include(u => u.Username)
+            .Include(u => u.Name)
+            .Include(u => u.LastName)
+            .Where(u => u.TypeUser == "Maestro")
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<User>> GetAllStudentsAsyc()
+    {
+        return await _context.Users
+            .Include(u => u.Id)
+            .Include(u => u.Username)
+            .Include(u => u.Name)
+            .Include(u => u.LastName)
+            .Where(u => u.TypeUser == "Alumno")
+            .ToListAsync();
+    }
+}
