@@ -8,6 +8,7 @@ public class UserDto
     public string LastName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public string Photo { get; set; } = string.Empty;
-    public List<TeamDto>? Teams { get; set; }
-    public List<SchoolClassDto>? SchoolClasses { get; set; }
+    public string TypeUser { get; set; } = string.Empty;
+    // public List<TeamDto>? Teams { get; set; }
+    // public List<SchoolClassDto>? SchoolClasses { get; set; }
 }

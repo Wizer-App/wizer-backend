@@ -1,13 +1,14 @@
+using Application.DTOs;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Users.Commands;
 
-public class AddCommand : IRequest<User>
+public class AddCommand : IRequest<UserDto>
 {
-    public User User { get; }
+    public UserDto User { get; }
 
-    public AddCommand(User user)
+    public AddCommand(UserDto user)
     {
         User = user;
     }
