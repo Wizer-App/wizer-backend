@@ -4,12 +4,14 @@ using MediatR;
 
 namespace Application.SchoolClasses.Commands;
 
-public class UpdateCommand : IRequest<SchoolClassDto>
+public class UpdateSchoolClassCommand : IRequest<SchoolClassDto>
 {
-    public SchoolClassDto SchoolClassDto { get;  }
+    public int SchoolClassId { get; }
+    public UpdateSchoolClassDto UpdateSchoolClassDto { get;  }
     
-    public UpdateCommand(SchoolClassDto schoolClassDto)
+    public UpdateSchoolClassCommand(int schoolClassId, UpdateSchoolClassDto updateSchoolClassDto)
     {
-        SchoolClassDto = schoolClassDto;
+        UpdateSchoolClassDto = updateSchoolClassDto;
+        SchoolClassId = schoolClassId;
     }
 }

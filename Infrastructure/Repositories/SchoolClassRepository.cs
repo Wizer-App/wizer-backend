@@ -58,13 +58,15 @@ public class SchoolClassRepository : ISchoolClassRepository
             .FirstOrDefaultAsync(sc => sc.Id == schoolClass.Id) ?? schoolClass;
     }
 
-    public async Task<SchoolClass> UpdateAsync(SchoolClass schoolClass)
+    public async Task<SchoolClass> UpdateAsync(int schoolClassId, SchoolClass schoolClass)
     {
         //lo marca como que ya existe y esta modificado
         _context.Entry(schoolClass).State = EntityState.Modified;
         // espera a que termine y guarda los cambios
         await _context.SaveChangesAsync();
-        return schoolClass;
+        return await _context.SchoolClasses
+            .Include(sc => sc.Teacher)
+            .FirstOrDefaultAsync(sc => sc.Id == schoolClassId) ?? schoolClass;;
     }
 
     public async Task DeleteAsync(int id)

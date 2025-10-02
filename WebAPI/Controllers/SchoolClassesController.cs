@@ -22,7 +22,6 @@ public class SchoolClassesController : ControllerBase
     public async Task<IActionResult> GetAllSchoolClassByUserId([FromQuery] int userId)
     {
         var result = await _mediator.Send(new GetAllSchoolClassByUserIdQuery(userId));
-        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(result));
         return Ok(result);
     }
 
@@ -30,6 +29,10 @@ public class SchoolClassesController : ControllerBase
     public async Task<IActionResult> GetById(int schoolClassId)
     {
         var result = await _mediator.Send((new GetSchoolClassByIdQuery(schoolClassId)));
+        if (result == null){
+            return NotFound(new { message = $"Clase con ID {schoolClassId} no encontrada" });  
+        }
+
         return Ok(result);
     }
     
@@ -38,14 +41,18 @@ public class SchoolClassesController : ControllerBase
     {
         var result = await _mediator.Send(new AddSchoolClassCommand(schoolClassDto));
         
-        return Ok(result);
+        return CreatedAtAction(
+            nameof(GetById), 
+            new { schoolClassId = result.Id }, 
+            result
+        ); 
     }
     
     [HttpPut("{schoolClassId}")]
-    public async Task<IActionResult> Update(int schoolClassId, [FromBody] SchoolClassDto schoolClassDto)
+    public async Task<IActionResult> Update(int schoolClassId, [FromBody] UpdateSchoolClassDto updateSchoolClassDto)
 
     {
-        var result = await _mediator.Send(new UpdateSchoolClassCommand(schoolClassId, schoolClassDto));
+        var result = await _mediator.Send(new UpdateSchoolClassCommand(schoolClassId, updateSchoolClassDto));
         return Ok(result);
     }
     
@@ -53,7 +60,7 @@ public class SchoolClassesController : ControllerBase
     public async Task<IActionResult> Delete(int schoolClassId)
     {
         var result = await _mediator.Send(new DeleteSchoolClassCommand(schoolClassId));
-        return Ok(result);
+        return NoContent();
     }
     
     [HttpPost("join")]
@@ -67,7 +74,7 @@ public class SchoolClassesController : ControllerBase
     public async Task<IActionResult> Leave(int classId, int userId)
     {
         var result = await _mediator.Send(new LeaveSchoolClassCommand(classId, userId));
-        return Ok(result);
+        return NoContent();
     }
     
     [HttpGet("{schoolClassId}/students")]

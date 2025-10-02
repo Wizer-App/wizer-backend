@@ -10,7 +10,7 @@ public interface ISchoolClassRepository
     // ? que puede ser nulo 
     Task<SchoolClass?> GetByIdAsync(int id);
     Task<SchoolClass> AddAsync(SchoolClass schoolClass);
-    Task<SchoolClass> UpdateAsync(SchoolClass schoolClass);
+    Task<SchoolClass> UpdateAsync(int schoolClassId, SchoolClass schoolClass);
     Task DeleteAsync(int id);
     Task<SchoolClass> JoinSchoolClassAsync(string joinCode, int userId);
     Task<bool> LeaveSchoolClassAsync(int classId, int userId);

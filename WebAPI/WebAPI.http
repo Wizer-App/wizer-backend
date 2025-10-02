@@ -5,23 +5,32 @@ Accept: application/json
 
 ### Funciona
 ### Obtener todas las clases de un usuario 
-GET http://localhost:5285/api/SchoolClasses/schoolclass/user/2
+GET http://localhost:5285/api/schoolclasses?userId=2
 Accept: application/json
 
 ### Funciona
 ### Obtener clase por ID
-GET http://localhost:5285/api/SchoolClasses/schoolclass/class/2
+GET http://localhost:5285/api/schoolclasses/1
 Accept: application/json
 
 
 ### Crear una clase
-POST http://localhost:5285/api/SchoolClasses/schoolclass
+POST http://localhost:5285/api/schoolclasses
 Content-Type: application/json
 
 {
-  "name": "prueba nombre teacher",
-  "description": "teacher test",
+  "name": "prueba 201 teacher",
+  "description": "teacher aaaa",
   "teacher": {
     "id": 2
   }
+}
+
+### actualizar una clase
+PUT http://localhost:5285/api/schoolclasses/
+Content-Type: application/json
+
+{
+  "name": "prueba update ",
+  "description": "teacher test"
 }
