@@ -19,8 +19,8 @@ POST http://localhost:5285/api/SchoolClasses/schoolclass
 Content-Type: application/json
 
 {
-  "name": "test 101",
-  "description": "Clase introductoria de matemáticas",
+  "name": "prueba nombre teacher",
+  "description": "teacher test",
   "teacher": {
     "id": 2
   }

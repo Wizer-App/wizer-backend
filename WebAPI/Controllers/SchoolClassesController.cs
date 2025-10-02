@@ -38,6 +38,7 @@ public class SchoolClassesController : ControllerBase
     public async Task<IActionResult> Add([FromBody] SchoolClassDto schoolClassDto)
     {
         var result = await _mediator.Send(new AddSchoolClassCommand(schoolClassDto));
+        
         return Ok(result);
     }
 

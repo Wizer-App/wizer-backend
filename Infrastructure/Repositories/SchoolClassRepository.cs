@@ -1,4 +1,3 @@
-using System.Xml.Linq;
 using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Data;
@@ -54,7 +53,9 @@ public class SchoolClassRepository : ISchoolClassRepository
         _context.SchoolClasses.Add(schoolClass);
         // espera a que termine y guarda los cambios
         await _context.SaveChangesAsync();
-        return schoolClass;
+        return await _context.SchoolClasses
+            .Include(sc => sc.Teacher)
+            .FirstOrDefaultAsync(sc => sc.Id == schoolClass.Id) ?? schoolClass;
     }
 
     public async Task<SchoolClass> UpdateAsync(SchoolClass schoolClass)
