@@ -19,7 +19,6 @@ public class JoinSchoolClassHandler : IRequestHandler<JoinSchoolClassCommand, Sc
     
     public async Task<SchoolClassDto> Handle(JoinSchoolClassCommand request, CancellationToken cancellationToken)
     {
-        // validar que exista el user
         var schoolClass = await _repository.JoinSchoolClassAsync(request.JoinCode, request.UserId);
         
         if (schoolClass == null)

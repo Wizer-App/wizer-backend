@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Data;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
@@ -87,13 +88,11 @@ public class SchoolClassRepository : ISchoolClassRepository
         // busca en la clase que tenga ese codigo y se trae la lista de estudiantes
         var schoolClass = await _context.SchoolClasses
             .Include(sc => sc.Students)
+            .Include(sc => sc.Teacher)
             .FirstOrDefaultAsync(sc => sc.JoinCode == joinCode);
 
         if (schoolClass == null)
         {
-            Console.WriteLine("Clase no encontrada con ese codigo");
-
-            // sino encuentra ninguna clase lanza la exception
             throw new KeyNotFoundException("Clase no encontrada con ese código.");
         }
         
@@ -101,8 +100,6 @@ public class SchoolClassRepository : ISchoolClassRepository
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
         {
-            Console.WriteLine("usuario no encontrado");
-
             throw new KeyNotFoundException("Usuario no encontrado.");
         }
         
