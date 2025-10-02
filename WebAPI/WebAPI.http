@@ -34,3 +34,7 @@ Content-Type: application/json
   "name": "prueba update ",
   "description": "teacher test"
 }
+
+### eliminar una clase
+DELETE http://localhost:5285/api/schoolclasses/5
+Accept: application/json
