@@ -38,3 +38,12 @@ Content-Type: application/json
 ### eliminar una clase
 DELETE http://localhost:5285/api/schoolclasses/5
 Accept: application/json
+
+### Entrar a una clase
+POST http://localhost:5285/api/schoolclasses/join
+Content-Type: application/json
+
+{
+  "joinCode": "9352E5",
+  "userId": 3
+}

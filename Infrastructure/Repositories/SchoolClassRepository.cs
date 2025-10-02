@@ -89,8 +89,10 @@ public class SchoolClassRepository : ISchoolClassRepository
             .Include(sc => sc.Students)
             .FirstOrDefaultAsync(sc => sc.JoinCode == joinCode);
 
-        if (schoolClass != null)
+        if (schoolClass == null)
         {
+            Console.WriteLine("Clase no encontrada con ese codigo");
+
             // sino encuentra ninguna clase lanza la exception
             throw new KeyNotFoundException("Clase no encontrada con ese código.");
         }
@@ -99,15 +101,20 @@ public class SchoolClassRepository : ISchoolClassRepository
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
         {
+            Console.WriteLine("usuario no encontrado");
+
             throw new KeyNotFoundException("Usuario no encontrado.");
         }
         
         //busca si el usuario ya esta en la clase 
-        if (schoolClass!.Students.Any(u => u.Id == userId))
+        if (!schoolClass.Students.Any(u => u.Id == userId))  // ✅ BIEN: Si NO está, lo agrega
         {
-            // de no ser asi lo marca como agregado
             schoolClass.Students.Add(user);
+        }
+        else
+        {
             
+            throw new InvalidOperationException("El usuario ya pertenece a esta clase");
         }
     //y guarda los cambios
         await _context.SaveChangesAsync();
