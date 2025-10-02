@@ -3,15 +3,14 @@
 GET {{WebAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
-###
-### Obtener todas las clases de un usuario
+### Funciona
+### Obtener todas las clases de un usuario 
 GET http://localhost:5285/api/SchoolClasses/schoolclass/user/2
 Accept: application/json
 
-###
-
+### Funciona
 ### Obtener clase por ID
-GET http://localhost:5285/api/SchoolClasses/schoolclass/class/1
+GET http://localhost:5285/api/SchoolClasses/schoolclass/class/2
 Accept: application/json
 
 
