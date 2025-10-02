@@ -6,10 +6,10 @@ namespace Application.SchoolClasses.Commands;
 
 public class AddSchoolClassCommand :IRequest<SchoolClassDto>
 {
-    public SchoolClassDto SchoolClass { get; }
+    public SchoolClassDto SchoolClassDto { get; }
     
-    public AddSchoolClassCommand(SchoolClassDto schoolClass)
+    public AddSchoolClassCommand(SchoolClassDto schoolClassDto)
     {
-        SchoolClass = schoolClass;
+        SchoolClassDto = schoolClassDto;
     }
 }

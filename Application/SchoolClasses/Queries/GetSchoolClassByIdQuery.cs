@@ -1,9 +1,10 @@
+using Application.DTOs;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.SchoolClasses.Queries;
 
-public class GetSchoolClassByIdQuery : IRequest<SchoolClass>
+public class GetSchoolClassByIdQuery : IRequest<SchoolClassDto>
 {  
     public int Id { get;}
     

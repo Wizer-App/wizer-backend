@@ -18,7 +18,7 @@ public class AddSchoolClassHandler : IRequestHandler<AddSchoolClassCommand, Scho
     }
     public async Task<SchoolClassDto> Handle(AddSchoolClassCommand request, CancellationToken cancellationToken)
     {
-        var schoolClassEntity = _mapper.Map<SchoolClass>(request.SchoolClass);
+        var schoolClassEntity = _mapper.Map<SchoolClass>(request.SchoolClassDto);
         var addedSchoolClass = await _repository.AddAsync(schoolClassEntity);
         var schoolClassDto = _mapper.Map<SchoolClassDto>(addedSchoolClass);
         return schoolClassDto;

@@ -24,14 +24,7 @@ public class GetAllSchoolClassByUserIdHandler : IRequestHandler<GetAllSchoolClas
     {
         //solamente llamamos al repository y retornamos
         var schoolClass = await _repository.GetAllSchoolClassByUserIdAsync(request.UserId);
-        Console.WriteLine($"Repository returned {schoolClass.Count()} items");
-        foreach(var sc in schoolClass)
-        {
-            Console.WriteLine($"SchoolClass Id: {sc.Id}, Name: {sc.Name}, TeacherId: {sc.TeacherId}");
-        }
         var schoolClassDto = _mapper.Map<IEnumerable<SchoolClassDto>>(schoolClass);
-        Console.WriteLine($"Mapped to DTOs, count: {schoolClassDto.Count()}");
-        
         return schoolClassDto;
     }
 }
