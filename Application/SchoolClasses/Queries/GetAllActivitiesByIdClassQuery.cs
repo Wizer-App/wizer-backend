@@ -1,9 +1,10 @@
+using Application.DTOs;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.SchoolClasses.Queries;
 
-public class GetAllActivitiesByIdClassQuery : IRequest<IEnumerable<Activity>>
+public class GetAllActivitiesByIdClassQuery : IRequest<IEnumerable<ActivityDto>>
 {
     public int ClassId { get; }
     

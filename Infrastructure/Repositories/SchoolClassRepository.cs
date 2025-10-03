@@ -164,6 +164,12 @@ public class SchoolClassRepository : ISchoolClassRepository
 
     public async Task<IEnumerable<Team>> GetAllTeamsByIdClassAsync(int classId)
     {
+        var schoolClass = await _context.SchoolClasses.FindAsync(classId);
+
+        if (schoolClass == null)
+        {
+            throw new KeyNotFoundException("Clase no encontrado.");
+        }
         //aca cambia ya que teams tiene un FK que apunta a clases 
         return await _context.Teams
                 //Solo traemos los teams con ese Fk de ese Id
@@ -173,6 +179,12 @@ public class SchoolClassRepository : ISchoolClassRepository
 
     public async Task<IEnumerable<Activity>> GetAllActivitiesByIdClassAsync(int classId)
     {
+        var schoolClass = await _context.SchoolClasses.FindAsync(classId);
+
+        if (schoolClass == null)
+        {
+            throw new KeyNotFoundException("Clase no encontrado.");
+        }
         //Lo mismo de arriba
         return await _context.Activities
             .Where(a => a.SchoolClassId == classId)
