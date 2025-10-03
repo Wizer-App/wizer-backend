@@ -74,7 +74,13 @@ public class SchoolClassesController : ControllerBase
     public async Task<IActionResult> Leave(int classId, int userId)
     {
         var result = await _mediator.Send(new LeaveSchoolClassCommand(classId, userId));
-        return NoContent();
+    
+        if (!result)
+        {
+            return NotFound(new { message = "No se pudo salir de la clase" });
+        }
+    
+        return NotFound(new { message = "si jalo " });
     }
     
     [HttpGet("{schoolClassId}/students")]
