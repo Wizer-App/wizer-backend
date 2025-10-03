@@ -1,12 +1,12 @@
-using Domain.Entities;
+using Application.DTOs;
 using MediatR;
 
 namespace Application.Users.Queries;
 
-public class GetAllStudentsQeury : IRequest<IEnumerable<User>>
+public class GetAllStudentsQuery : IRequest<IEnumerable<UserDto>>
 {
-    public GetAllStudentsQeury()
+    public GetAllStudentsQuery()
     {
-
+        
     }
 }

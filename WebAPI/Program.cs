@@ -3,6 +3,7 @@ using Application.SchoolClasses.Handlers;
 using Application.SchoolClasses.Mapping;
 using Application.Teams.Mapping;
 using Application.Users.Handlers;
+using Application.Users.Mapping;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using MediatR;
@@ -31,6 +32,7 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddAutoMapper(typeof(SchoolClassProfile)); 
 builder.Services.AddAutoMapper(typeof(TeamProfile));
 builder.Services.AddAutoMapper(typeof(ActivityProfile)); 
+builder.Services.AddAutoMapper(typeof(UserProfile));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

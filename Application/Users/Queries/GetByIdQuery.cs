@@ -1,9 +1,9 @@
-using Domain.Entities;
+using Application.DTOs;
 using MediatR;
 
 namespace Application.Users.Queries;
 
-public class GetByIdQuery : IRequest<User>
+public class GetByIdQuery : IRequest<UserDto>
 {
     public int UserId { get; }
 

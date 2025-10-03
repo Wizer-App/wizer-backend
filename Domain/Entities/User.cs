@@ -9,6 +9,7 @@ public class User
     public string Photo { get; set; } = string.Empty;
     public DateTime Created { get; set; } = DateTime.UtcNow;
     public string TypeUser { get; set; } = string.Empty;
+     public int InfoUserId { get; set; }
     public InfoUser InfoUser { get; set; } = null!;
     public ICollection<Team> Teams { get; set; } = new List<Team>();
     public ICollection<SchoolClass> SchoolClasses { get; set; } = new List<SchoolClass>();

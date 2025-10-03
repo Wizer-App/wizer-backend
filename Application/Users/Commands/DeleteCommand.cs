@@ -1,4 +1,3 @@
-using Domain.Entities;
 using MediatR;
 
 namespace Application.Users.Commands;

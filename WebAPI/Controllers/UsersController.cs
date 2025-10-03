@@ -17,7 +17,7 @@ public class UsersController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
         var result = await _mediator.Send(new GetByIdQuery(id));
@@ -35,7 +35,9 @@ public class UsersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] UserDto userDto)
     {
+        Console.WriteLine("Antes de agregar");
         var result = await _mediator.Send(new AddCommand(userDto));
+        Console.WriteLine("Si agrego");
         return Ok(result);
     }
 
@@ -46,11 +48,31 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-    // para probar si va bien
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var resutl = await _mediator.Send(new DeleteCommand(id));
+        return Ok(resutl);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAllUsers()
     {
         var result = await _mediator.Send(new GetAllUsersQuery());
+        return Ok(result);
+    }
+
+    [HttpGet("teachers")]
+    public async Task<IActionResult> GetAllTeachers()
+    {
+        var result = await _mediator.Send(new GetAllTeachersQuery());
+        return Ok(result);
+    }
+
+    [HttpGet("students")]
+    public async Task<IActionResult> GetAllStudents()
+    {
+        var result = await _mediator.Send(new GetAllStudentsQuery());
         return Ok(result);
     }
 }
