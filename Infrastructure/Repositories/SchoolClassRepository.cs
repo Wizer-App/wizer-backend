@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Data;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
@@ -87,13 +88,11 @@ public class SchoolClassRepository : ISchoolClassRepository
         // busca en la clase que tenga ese codigo y se trae la lista de estudiantes
         var schoolClass = await _context.SchoolClasses
             .Include(sc => sc.Students)
+            .Include(sc => sc.Teacher)
             .FirstOrDefaultAsync(sc => sc.JoinCode == joinCode);
 
         if (schoolClass == null)
         {
-            Console.WriteLine("Clase no encontrada con ese codigo");
-
-            // sino encuentra ninguna clase lanza la exception
             throw new KeyNotFoundException("Clase no encontrada con ese código.");
         }
         
@@ -101,8 +100,6 @@ public class SchoolClassRepository : ISchoolClassRepository
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
         {
-            Console.WriteLine("usuario no encontrado");
-
             throw new KeyNotFoundException("Usuario no encontrado.");
         }
         
@@ -149,6 +146,13 @@ public class SchoolClassRepository : ISchoolClassRepository
 
     public async Task<IEnumerable<User>> GetAllStudentsByIdClassAsync(int classId)
     {
+        var schoolClass = await _context.SchoolClasses.FindAsync(classId);
+
+        if (schoolClass == null)
+        {
+            throw new KeyNotFoundException("Clase no encontrado.");
+        }
+            
         return await _context.SchoolClasses
                 //buscal la clase con ese id
             .Where(sc => sc.Id == classId)
@@ -160,6 +164,12 @@ public class SchoolClassRepository : ISchoolClassRepository
 
     public async Task<IEnumerable<Team>> GetAllTeamsByIdClassAsync(int classId)
     {
+        var schoolClass = await _context.SchoolClasses.FindAsync(classId);
+
+        if (schoolClass == null)
+        {
+            throw new KeyNotFoundException("Clase no encontrado.");
+        }
         //aca cambia ya que teams tiene un FK que apunta a clases 
         return await _context.Teams
                 //Solo traemos los teams con ese Fk de ese Id
@@ -169,6 +179,12 @@ public class SchoolClassRepository : ISchoolClassRepository
 
     public async Task<IEnumerable<Activity>> GetAllActivitiesByIdClassAsync(int classId)
     {
+        var schoolClass = await _context.SchoolClasses.FindAsync(classId);
+
+        if (schoolClass == null)
+        {
+            throw new KeyNotFoundException("Clase no encontrado.");
+        }
         //Lo mismo de arriba
         return await _context.Activities
             .Where(a => a.SchoolClassId == classId)

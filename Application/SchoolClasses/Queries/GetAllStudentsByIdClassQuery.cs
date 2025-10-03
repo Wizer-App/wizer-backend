@@ -1,9 +1,10 @@
+using Application.DTOs;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.SchoolClasses.Queries;
 
-public class GetAllStudentsByIdClassQuery : IRequest<IEnumerable<User>>
+public class GetAllStudentsByIdClassQuery : IRequest<IEnumerable<UserDto>>
 {
     public int ClassId { get; }
     

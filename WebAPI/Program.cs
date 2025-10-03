@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using Application.SchoolClasses.Handlers;
 using Application.SchoolClasses.Mapping;
+using Application.Teams.Mapping;
 using Application.Users.Handlers;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -28,6 +29,9 @@ builder.Services.AddMediatR(cfg =>
 });
 
 builder.Services.AddAutoMapper(typeof(SchoolClassProfile)); 
+builder.Services.AddAutoMapper(typeof(TeamProfile));
+builder.Services.AddAutoMapper(typeof(ActivityProfile)); 
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
