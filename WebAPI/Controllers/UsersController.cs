@@ -42,9 +42,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UserDto userDto)
+    public async Task<IActionResult> Update(int userId, [FromBody] UpdateUserDto updateUserDto)
     {
-        var result = await _mediator.Send(new UpdateCommand(userDto));
+        var result = await _mediator.Send(new UpdateCommand(userId, updateUserDto));
         return Ok(result);
     }
 

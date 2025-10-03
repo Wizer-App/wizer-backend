@@ -5,10 +5,12 @@ namespace Application.Users.Commands;
 
 public class UpdateCommand : IRequest<UserDto>
 {
-    public UserDto User { get; }
+    public int UserId { get; }
+    public UpdateUserDto UpdateUser { get; }
 
-    public UpdateCommand(UserDto user)
+    public UpdateCommand(int userId, UpdateUserDto updateUser)
     {
-        User = user;
+        UserId = userId;
+        UpdateUser = updateUser;
     }
 }
