@@ -66,7 +66,7 @@ public class UserRepository : IUserRepository
     public async Task<IEnumerable<User>> GetAllStudentsAsyc()
     {
         return await _context.Users
-            .Where(u => u.TypeUser == "Alumno")
+            .Where(u => u.TypeUser == "Estudiante")
             .ToListAsync();
     }
 }
