@@ -146,6 +146,13 @@ public class SchoolClassRepository : ISchoolClassRepository
 
     public async Task<IEnumerable<User>> GetAllStudentsByIdClassAsync(int classId)
     {
+        var schoolClass = await _context.SchoolClasses.FindAsync(classId);
+
+        if (schoolClass == null)
+        {
+            throw new KeyNotFoundException("Clase no encontrado.");
+        }
+            
         return await _context.SchoolClasses
                 //buscal la clase con ese id
             .Where(sc => sc.Id == classId)
