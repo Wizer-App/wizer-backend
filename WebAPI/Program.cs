@@ -6,11 +6,25 @@ using Application.Users.Handlers;
 using Application.Users.Mapping;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Middleware;
+using Supabase;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddSingleton(provider => 
+    new Client(
+        builder.Configuration["Supabase:Url"]!,
+        builder.Configuration["Supabase:Key"],
+        new SupabaseOptions
+        {
+            AutoRefreshToken = true,
+            AutoConnectRealtime = true
+        }
+    )
+);
+
 
 builder.Services.AddCors(options =>
 {
@@ -36,6 +50,7 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(GetAllSchoolClassByUserIdHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(GetAllUsersHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
     // Agrega más assemblies si tienes handlers en otros proyectos
 });
 
