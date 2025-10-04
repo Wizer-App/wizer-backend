@@ -1,4 +1,5 @@
 using Application.Interfaces;
+using Application.Notifications.Interfaces;
 using Application.SchoolClasses.Handlers;
 using Application.SchoolClasses.Mapping;
 using Application.Teams.Mapping;
@@ -9,6 +10,8 @@ using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Middleware;
 using Supabase;
+using WebAPI.Hubs;
+using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,9 +66,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSignalR();
+builder.Services.AddScoped<IRealTimeNotifier, RealTimeNotifier>();
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.MapHub<WizerbHub>("/hubs/wizer");
 
 
 if (app.Environment.IsDevelopment())
