@@ -1,4 +1,4 @@
-using Application.DTOs;
+namespace Application.DTOs;
 
 public class AuthResponseDto
 {
