@@ -25,6 +25,11 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, AuthResponseDto>
             return new AuthResponseDto { Success = false, Message = "Formato de email inválido" };
         }
 
+        if (response.TypeUser != "Estudiante" && response.TypeUser != "Maestro")
+        {
+            return new AuthResponseDto { Success = false, Message = "Tipo de usuario invalido" };
+        }
+
         try
         {
             var authResult = await _supabase.Auth.SignUp(response.Email, response.Password);
@@ -34,6 +39,16 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, AuthResponseDto>
                 return new AuthResponseDto { Success = false, Message = "Error en el registro" };
             }
 
+            var infoUser = new InfoUserDto
+            {
+                Career = "Default",
+                ProfessionalTitle = "Default",
+                Semester = "Default",
+                Tuition = "Default"
+            };
+            var createInforUserCommand = new CreateInfoUserCommand(infoUser);
+            var infoUserResult = await _mediator.Send(createInforUserCommand, cancellationToken);
+
             var userDto = new UserDto
             {
                 Id = 0,
@@ -42,11 +57,10 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, AuthResponseDto>
                 Name = "Default",
                 LastName = "Default",
                 Photo = ".url",
-                TypeUser = "Estudiante",
-                InfoUserId = 3,
+                TypeUser = response.TypeUser,
+                InfoUserId = infoUserResult.Id,
                 CreatedAt = DateTime.UtcNow
             };
-
             var createUserCommand = new AddCommand(userDto);
             var userResult = await _mediator.Send(createUserCommand, cancellationToken);
 
