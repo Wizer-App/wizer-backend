@@ -1,5 +1,4 @@
 using Application.Auth.Commands.Register;
-using Application.Chat.Handlers;
 using Application.Chat.Interfaces;
 using Application.Interfaces;
 using Application.Notifications.Interfaces;
@@ -60,7 +59,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllSchoolClassByUserIdHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(GetAllUsersHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(SendMessageHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(RegisterHandler).Assembly);
     // Agrega más assemblies si tienes handlers en otros proyectos
 });
 
