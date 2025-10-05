@@ -16,7 +16,9 @@ public class SchoolClass
     public ICollection<Team> Teams { get; set; } = new List<Team>();
     public ICollection<User> Students { get; set; } = new List<User>(); 
     public ICollection<Activity> Activities { get; set; } = new List<Activity>();
+    public ICollection<Message> Messages { get; set; } = new List<Message>();
     
+    public string GetChatGroupName() => $"class_{Id}_chat";
     //metodo generar el codigo 
     public void GenerateJoinCode()
     {

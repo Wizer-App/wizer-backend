@@ -92,6 +92,24 @@ public class AppDbContext : DbContext
             .WithOne(a => a.CreatedBy)
             .HasForeignKey(a => a.CreatedById)
             .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.Sender)
+            .WithMany()
+            .HasForeignKey(m => m.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.SchoolClass)
+            .WithMany(sc => sc.Messages)
+            .HasForeignKey(m => m.SchoolClassId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Message>()
+            .HasOne(m=> m.Team)
+            .WithMany(t => t.Messages)
+            .HasForeignKey(m => m.TeamId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 
 }
