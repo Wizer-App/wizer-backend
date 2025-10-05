@@ -5,10 +5,10 @@ namespace Application.Chat.Commands;
 
 public class SendMessageCommand :IRequest<MessageDto>
 {
-    public MessageDto MessageDto { get; }
+    public SendMessageRequestDto Message { get; }
     
-    public SendMessageCommand(MessageDto messageDto)
+    public SendMessageCommand(SendMessageRequestDto messageDto)
     {
-        MessageDto = messageDto;
+        Message = messageDto;
     }
 }

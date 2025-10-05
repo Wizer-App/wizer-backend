@@ -16,9 +16,9 @@ public class ChatRepository : IChatRepository
 
     public async Task<Message> SendMessageAsync(Message message)
     {
-        await _context.Messages.AddAsync(message);
+        await _context.Message.AddAsync(message);
         await _context.SaveChangesAsync();
-        return await _context.Messages
+        return await _context.Message
             .Include(m => m.Sender)
             .Include(m => m.SchoolClass)
             .Include(m => m.Team)
@@ -27,7 +27,7 @@ public class ChatRepository : IChatRepository
 
     public async Task<IEnumerable<Message>> GetMessagesBySchoolClassIdAsync(int schoolClassId, int page, int pageSize)
     {
-        return await _context.Messages
+        return await _context.Message
             .Where(m => m.SchoolClassId == schoolClassId)
             .OrderByDescending(m => m.SentAt)
             .Skip((page - 1) * pageSize)
@@ -39,7 +39,7 @@ public class ChatRepository : IChatRepository
 
     public async Task<IEnumerable<Message>> GetMessagesByTeamIdAsync(int teamId, int page, int pageSize)
     {
-        return await _context.Messages
+        return await _context.Message
             .Where(m => m.TeamId == teamId)
             .OrderByDescending(m => m.SentAt)
             .Skip((page - 1) * pageSize)

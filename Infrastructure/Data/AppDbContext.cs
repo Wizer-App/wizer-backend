@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
     public DbSet<Document> Documents { get; set; } = null!;
     public DbSet<InfoUser> InfoUsers { get; set; } = null!;
 
-    public DbSet<Message> Messages { get; set; } = null!;
+    public DbSet<Message> Message { get; set; } = null!;
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

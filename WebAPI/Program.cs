@@ -1,5 +1,7 @@
 using Application.Auth.Commands.Register;
+using Application.Chat.Handlers;
 using Application.Chat.Interfaces;
+using Application.Chat.Mapping;
 using Application.Interfaces;
 using Application.Notifications.Interfaces;
 using Application.SchoolClasses.Handlers;
@@ -61,13 +63,14 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllUsersHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(RegisterHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(SendMessageHandler).Assembly);
     // Agrega más assemblies si tienes handlers en otros proyectos
 });
 
 builder.Services.AddAutoMapper(typeof(SchoolClassProfile)); 
 builder.Services.AddAutoMapper(typeof(TeamProfile));
 builder.Services.AddAutoMapper(typeof(ActivityProfile)); 
-builder.Services.AddAutoMapper(typeof(UserProfile));
+builder.Services.AddAutoMapper(typeof(ChatProfile));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
