@@ -1,4 +1,3 @@
-using Application.Auth.Commands.Register;
 using Application.Chat.Interfaces;
 using Application.Interfaces;
 using Application.Notifications.Interfaces;
@@ -49,6 +48,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //los repositories
 builder.Services.AddScoped<ISchoolClassRepository, SchoolClassRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IInfoUserRepository, InfoUserRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 
 
@@ -59,7 +59,6 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllSchoolClassByUserIdHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(GetAllUsersHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(RegisterHandler).Assembly);
     // Agrega más assemblies si tienes handlers en otros proyectos
 });
 
