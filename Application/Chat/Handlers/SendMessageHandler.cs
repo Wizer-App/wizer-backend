@@ -23,9 +23,18 @@ public class SendMessageHandler: IRequestHandler<SendMessageCommand, MessageDto>
     
     public async Task<MessageDto> Handle(SendMessageCommand request, CancellationToken cancellationToken)
     {
-        var messageEntity = _Mapper.Map<Message>(request.MessageDto);
+        var messageEntity = new Message
+        {
+            Content = request.Message.Content,
+            SentAt = DateTime.UtcNow,
+            SenderId = request.Message.SenderId,
+            SchoolClassId = request.Message.SchoolClassId.Value,
+            TeamId = request.Message.TeamId
+        };
+
         var saveMessage = await _Repository.SendMessageAsync(messageEntity);
         var messageDto = _Mapper.Map<MessageDto>(saveMessage);
+
         if (messageDto.SchoolClass != null && messageDto.Team == null)
         {
             await _Notifier.NotifyClassAsync(
@@ -42,6 +51,7 @@ public class SendMessageHandler: IRequestHandler<SendMessageCommand, MessageDto>
                 messageDto
             );
         }
+
         return messageDto;
     }
 }
