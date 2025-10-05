@@ -12,4 +12,6 @@ public class Team
     public User Creator { get; set; } = null!;
     public ICollection<User> Members { get; set; } = new List<User>();
     public ICollection<Activity> Activities { get; set; } = new List<Activity>();
+    public ICollection<Message> Messages { get; set; } = new List<Message>();
+    public string GetChatGroupName() => $"team{Id}_chat";
 }
