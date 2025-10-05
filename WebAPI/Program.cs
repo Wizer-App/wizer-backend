@@ -1,3 +1,6 @@
+using Application.Auth.Commands.Register;
+using Application.Chat.Handlers;
+using Application.Chat.Interfaces;
 using Application.Interfaces;
 using Application.Notifications.Interfaces;
 using Application.SchoolClasses.Handlers;
@@ -47,6 +50,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //los repositories
 builder.Services.AddScoped<ISchoolClassRepository, SchoolClassRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
+
 
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly)); // Escanea Handlers en Application
 // En Program.cs
@@ -55,6 +60,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllSchoolClassByUserIdHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(GetAllUsersHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(LoginHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(SendMessageHandler).Assembly);
     // Agrega más assemblies si tienes handlers en otros proyectos
 });
 
