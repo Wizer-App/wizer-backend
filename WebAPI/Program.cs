@@ -1,3 +1,4 @@
+using Application.Chat.Interfaces;
 using Application.Interfaces;
 using Application.Notifications.Interfaces;
 using Application.SchoolClasses.Handlers;
@@ -48,6 +49,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<ISchoolClassRepository, SchoolClassRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IInfoUserRepository, InfoUserRepository>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
+
 
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly)); // Escanea Handlers en Application
 // En Program.cs
