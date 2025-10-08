@@ -8,7 +8,6 @@ using Application.SchoolClasses.Handlers;
 using Application.SchoolClasses.Mapping;
 using Application.Teams.Mapping;
 using Application.Users.Handlers;
-using Application.Users.Mapping;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +52,7 @@ builder.Services.AddScoped<ISchoolClassRepository, SchoolClassRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IInfoUserRepository, InfoUserRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly)); // Escanea Handlers en Application
