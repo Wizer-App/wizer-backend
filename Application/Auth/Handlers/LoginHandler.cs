@@ -1,63 +1,28 @@
 using Application.Auth.Commands;
-using Application.Users.Queries;
 using Application.DTOs;
 using MediatR;
 using Supabase;
+using Application.Interfaces;
 
-public class LoginHandler : IRequestHandler<LoginCommand, AuthResponseDto>
+public class LoginHandler : IRequestHandler<LoginCommand, UserAuthDto>
 {
-    private readonly Client _client;
-    private readonly IMediator _mediator;
-    public LoginHandler(Client client, IMediator mediator)
+    public readonly IAuthRepository _repository;
+    public LoginHandler(IAuthRepository repository)
     {
-        _client = client;
-        _mediator = mediator;
+        _repository = repository;
     }
-    public async Task<AuthResponseDto> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<UserAuthDto> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        try
+         try
         {
-            var response = request.LoginDto;
-            var getUserQuery = new GetByUsernameQuery(response.Username);
-            var user = await _mediator.Send(getUserQuery, cancellationToken);
-            if (user == null)
-            {
-                return new AuthResponseDto
-                {
-                    Message = "Error, Usuario no encontrado",
-                    Success = false
-                };
-            }
-
-            var session = await _client.Auth.SignIn(user.Email, response.Password);
-            if (session?.User?.Id == null)
-            {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Login fallido"
-                };
-            }
-            else
-            {
-                return new AuthResponseDto
-                {
-                    UserId = session.User.Id,
-                    Username = response.Username,
-                    AccessToken = session.AccessToken,
-                    Success = true,
-                    Message = "Login exitoso"
-
-                };
-            }
+            var loginDto = request.LoginDto;
+            // LLamamos al login del repository
+            var userAuth = await _repository.Login(loginDto.Username, loginDto.Password);
+            return userAuth;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return new AuthResponseDto
-            {
-                Success = false,
-                Message = "Credenciales invalidas"
-            };
+            throw new Exception($"Error en login: {ex.Message}");
         }
     }
 }

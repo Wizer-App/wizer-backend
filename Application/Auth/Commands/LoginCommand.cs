@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Auth.Commands;
 
-public class LoginCommand : IRequest<AuthResponseDto>
+public class LoginCommand : IRequest<UserAuthDto>
 {
     public LoginDto LoginDto { get; }
 
